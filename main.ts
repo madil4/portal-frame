@@ -1,5 +1,5 @@
 import { analyze } from "awatif-fem";
-import { app, Parameters, Node, Element, Assignment } from "awatif-ui";
+import { app, Parameters, Model, Node, Element, AnalysisInput } from "awatif-ui";
 
 const parameters: Parameters = {
   meshDensity: { value: 7, min: 1, max: 7, step: 1, label: "mesh density" },
@@ -8,7 +8,7 @@ const parameters: Parameters = {
   load: { value: 10, min: 0, max: 20 },
 };
 
-function onParameterChange(parameters: Parameters) {
+function onParameterChange(parameters: Parameters): Model {
   const nodes: Node[] = [];
   const elements: Element[] = [];
   const count = parameters.meshDensity.value;
@@ -56,7 +56,7 @@ function onParameterChange(parameters: Parameters) {
   );
   elements.push([s - 1, s]); // connecting beam
 
-  const assignments: Assignment[] = [
+  const analysisInputs: AnalysisInput[] = [
     { node: 0, support: [true, true, true, true, true, true] },
     { node: nodes.length - 1, support: [true, true, true, true, true, true] },
     { node: loadNode, load: [parameters.load.value, 0, 0, 0, 0, 0] },
@@ -71,9 +71,9 @@ function onParameterChange(parameters: Parameters) {
     })),
   ];
 
-  const analysisResults = analyze(nodes, elements, assignments);
+  const analysisOutputs = analyze(nodes, elements, analysisInputs);
 
-  return { nodes, elements, assignments, analysisResults };
+  return { nodes, elements, analysisInputs, analysisOutputs };
 }
 
 app({
