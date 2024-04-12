@@ -1,7 +1,7 @@
 {
   "dependencies": {
-    "awatif-fem": "^0.0.4",
-    "awatif-ui": "^0.0.6",
+    "awatif-fem": "^0.0.9",
+    "awatif-ui": "^0.0.9",
     "vite": "^5.1.5"
   }
 }
